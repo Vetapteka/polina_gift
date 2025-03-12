@@ -2,7 +2,7 @@ import {Application, Assets, Graphics, Sprite, RenderTexture, Point, Container, 
 
 (async () => {
 	const app = new Application();
-	globalThis.__PIXI_APP__ = app;
+	// globalThis.__PIXI_APP__ = app;
 
 	await app.init({background: "#fc6a03", resizeTo: window});
 	document.getElementById("pixi-container")!.appendChild(app.canvas);
@@ -10,14 +10,14 @@ import {Application, Assets, Graphics, Sprite, RenderTexture, Point, Container, 
 	const brush = new Graphics().circle(0, 0, 50).fill({ color: 0xffffff });
 	const line = new Graphics();
 
-	await Assets.load(['/assets/frog.png', '/assets/frog2.png', '/assets/sh.jpg']);
+	await Assets.load(['./assets/frog2.png', './assets/sh.jpg']);
 
 	const explosionTextures = [];
 	let i;
 
 	for (i = 0; i < 26; i++)
 	{
-		const texture = Texture.from(`/assets/frog2.png`);
+		const texture = Texture.from(`./assets/frog2.png`);
 		explosionTextures.push(texture);
 	}
 
@@ -40,7 +40,7 @@ import {Application, Assets, Graphics, Sprite, RenderTexture, Point, Container, 
 	const stageSize = { width, height };
 
 	const background = new Container();
-	const imageToReveal = Object.assign(Sprite.from('/assets/sh.jpg'), {width, height: 272* width/360});
+	const imageToReveal = Object.assign(Sprite.from('./assets/sh.jpg'), {width, height: 272* width/360});
 	const renderTexture = RenderTexture.create(stageSize);
 	const renderTextureSprite = new Sprite(renderTexture);
 
@@ -57,9 +57,8 @@ import {Application, Assets, Graphics, Sprite, RenderTexture, Point, Container, 
 		.on('pointermove', pointerMove);
 
 	let dragging = false;
-	let lastDrawnPoint: any = null;
+	let lastDrawnPoint: Point | null;
 
-	// @ts-ignore
 	function pointerMove({ global: { x, y } })
 	{
 		if (dragging)
